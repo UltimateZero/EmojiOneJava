@@ -22,7 +22,7 @@ public class ImageCache {
 	public Image getImage(String path) {
 		WeakReference<Image> ref = map.get(path);
 		if(ref == null || ref.get() == null) {
-			ref = new WeakReference<Image>(new Image(path));
+			ref = new WeakReference<Image>(new Image(path, true));
 			map.put(path, ref);
 		}
 		return ref.get();
