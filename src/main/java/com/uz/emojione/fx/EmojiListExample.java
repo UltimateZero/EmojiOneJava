@@ -22,7 +22,7 @@ public class EmojiListExample extends Application {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("EmojiList.fxml"));
 			Parent root = loader.load();
-			Scene scene = new Scene(root, 600, 300);
+			Scene scene = new Scene(root, 392, 300);
 			primaryStage.setTitle("Emojis List");
 			primaryStage.setScene(scene);
 			primaryStage.show();

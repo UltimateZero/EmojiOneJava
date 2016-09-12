@@ -29,6 +29,7 @@ public class EmojiConversionController {
 
 	@FXML
 	void initialize() {
+		flowOutput.setPadding(new Insets(10));
 		txtInput.setFont(Font.font(16));
 		txtInput.textProperty().addListener(e-> {
 			flowOutput.getChildren().clear();
