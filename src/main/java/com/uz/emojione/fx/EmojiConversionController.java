@@ -75,7 +75,7 @@ public class EmojiConversionController {
 	}
 
 	private String getEmojiImagePath(String hexStr) {
-		return Emoji.class.getResource("png_40/" + hexStr + ".png").toExternalForm();
+		return getClass().getResource("png_40/" + hexStr + ".png").toExternalForm();
 	}
 
 	private void addText(String text) {

@@ -192,7 +192,7 @@ public class EmojiListController {
 	}
 
 	private String getEmojiImagePath(String hexStr) {
-		return Emoji.class.getResource("png_40/" + hexStr + ".png").toExternalForm();
+		return getClass().getResource("png_40/" + hexStr + ".png").toExternalForm();
 	}
 
 	class ToneCell extends ListCell<Image> {
