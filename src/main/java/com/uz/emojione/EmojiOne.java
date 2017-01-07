@@ -30,21 +30,36 @@ public class EmojiOne {
 		return INSTANCE;
 	}
 
+
+	private static final String EMOJIONE_JSON_FILE = "emoji.json";
+	private static final String EMOJIONE_KEY_NAME = "name";
+	private static final String EMOJIONE_KEY_SHORTNAME = "shortname";
+	private static final String EMOJIONE_KEY_UNICODE_ALT = "unicode_alt";
+	private static final String EMOJIONE_KEY_UNICODE = "unicode";
+	private static final String EMOJIONE_KEY_ALIASES = "aliases";
+	private static final String EMOJIONE_KEY_ALIASES_ASCII = "aliases_ascii";
+	private static final String EMOJIONE_KEY_KEYWORDS = "keywords";
+	private static final String EMOJIONE_KEY_CATEGORY = "category";
+	private static final String EMOJIONE_KEY_EMOJI_ORDER = "emoji_order";
+
+	private static final String EMOJIONE_MODIFIER = "modifier";
+
+
 	private EmojiOne() {
-		URL url = EmojiOne.class.getResource("emoji.json");
+		URL url = EmojiOne.class.getResource(EMOJIONE_JSON_FILE);
 		Json j = Json.read(url);
 		Map<String, Json> map = j.asJsonMap();
 		map.forEach((key, value) -> {
 			Map<String, Json> valueMap = value.asJsonMap();
-			String name = valueMap.get("name").asString();
-			String shortname = valueMap.get("shortname").asString();
-			List<String> unicodes = valueMap.get("unicode_alternates").asList().stream().map(o -> (String) o).collect(Collectors.toList());
-			unicodes.add(valueMap.get("unicode").asString());
-			List<String> aliases = valueMap.get("aliases").asList().stream().map(o -> (String) o).collect(Collectors.toList());
-			List<String> aliases_ascii = valueMap.get("aliases_ascii").asList().stream().map(o -> (String) o).collect(Collectors.toList());
-			List<String> keywords = valueMap.get("keywords").asList().stream().map(o -> (String) o).distinct().collect(Collectors.toList());
-			String category = valueMap.get("category").asString();
-			int emojiOrder = valueMap.get("emoji_order").asInteger();
+			String name = valueMap.get(EMOJIONE_KEY_NAME).asString();
+			String shortname = valueMap.get(EMOJIONE_KEY_SHORTNAME).asString();
+			List<String> unicodes = valueMap.get(EMOJIONE_KEY_UNICODE_ALT).asList().stream().map(o -> (String) o).collect(Collectors.toList());
+			unicodes.add(valueMap.get(EMOJIONE_KEY_UNICODE).asString());
+			List<String> aliases = valueMap.get(EMOJIONE_KEY_ALIASES).asList().stream().map(o -> (String) o).collect(Collectors.toList());
+			List<String> aliases_ascii = valueMap.get(EMOJIONE_KEY_ALIASES_ASCII).asList().stream().map(o -> (String) o).collect(Collectors.toList());
+			List<String> keywords = valueMap.get(EMOJIONE_KEY_KEYWORDS).asList().stream().map(o -> (String) o).distinct().collect(Collectors.toList());
+			String category = valueMap.get(EMOJIONE_KEY_CATEGORY).asString();
+			int emojiOrder = valueMap.get(EMOJIONE_KEY_EMOJI_ORDER).asInteger();
 
 			EmojiEntry entry = new EmojiEntry();
 			entry.setName(name);
@@ -178,7 +193,7 @@ public class EmojiOne {
 	public Map<String, List<Emoji>> getCategorizedEmojis(int tone) {
 		Map<String, List<Emoji>> map = new HashMap<>();
 		getTonedEmojis(tone).forEach(emojiEntry -> {
-			if (emojiEntry.getCategory().equals("modifier")) return;
+			if (emojiEntry.getCategory().equals(EMOJIONE_MODIFIER)) return;
 			for (int i = 1; i <= 6; i++) {
 				if (i == tone) continue;
 				if (emojiEntry.getShortname().endsWith("_tone" + i + ":"))
